@@ -6,8 +6,8 @@ Similarly, we knew incumbency was important when predicting which candidates wou
 
 Lastly, we wanted to investigate how much the partisan makeup of a state impacted the outcome of elections. According to “The Real Value of Incumbency”[3] published in The Hill, how partisan a state is may be the most important predictor of who wins the general election (not primaries). Most people are not that familiar with their representatives or senators in congress, but elect them anyway simply because they are of the same party. Knowing this, we cleaned the dataset to allow incumbency to be a categorical feature to use in our model.
 
-[1] FEC
+[1] “Campaign Finance Data.” FEC.gov. Accessed December 12, 2019. [https://www.fec.gov/data/](https://www.fec.gov/data/).
 
-[2] https://fivethirtyeight.com/features/money-and-elections-a-complicated-love-story/
+[2] Koerth, Maggie. “How Money Affects Elections.” FiveThirtyEight, FiveThirtyEight, 10 Sept. 2018, [https://fivethirtyeight.com/features/money-and-elections-a-complicated-love-story](https://fivethirtyeight.com/features/money-and-elections-a-complicated-love-story).
 
-[3] https://thehill.com/opinion/columnists/mark-mellman/303491-the-real-value-of-incumbency
+[3] Mellman, Mark S. “The Real Value of Incumbency.” TheHill, 3 Feb. 2016, [https://thehill.com/opinion/columnists/mark-mellman/303491-the-real-value-of-incumbency](https://thehill.com/opinion/columnists/mark-mellman/303491-the-real-value-of-incumbency).
