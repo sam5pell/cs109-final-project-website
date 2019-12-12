@@ -1,5 +1,25 @@
 ## Project Trajectory
-When we began our project we hypothesized that the outcome of the most recent elections in a given district would be important in predicting the upcoming election (or in this case the 2018 election). However, after completing our preliminary data exploration and analyzing the results of our baseline model, we realized that while previous election results can give a better than average prediction for the winner, much more information and different types of information would be necessary to improve our model.
+Our project initially started with predicting, outright, the midterm elections. The model we created to do this was a linear regression against district-specific data. In this vein we looked at predictors such as: past victors, past parties, voter turnout, and voter demographics. The initial model scored around 75%. We found a development here: voter demographics were multi-collinear with party affiliation in most regions. We used the Pew Research Center's research on the subject to confirm this[1]. We decided to drop much of the demographic predictors to adjust for this.
+
+The improved model, as we stated in the report, had an accuracy score of 79% on testing data. We identified that this model is fairly strong in predictive power. This score, in a vacuum, is actually quite compelling and useful: it is well over the average “guess” and gives reliable results on most districts.
+
+After having achieved a reasonable model for predicting open seats in the House midterm election, we identified that there was much more to explore in this problem. This is when the idea of “battleground” districts became a center talking point in our group. Our model’s usefulness was hinged on incumbency. We found that the model was marginally better than predicting based on the party affiliation of the most recent winner. This is because demographically homogenous districts are highly likely to vote along party lines come midterm elections. This made incumbency a simple yet powerful predictor. If a candidate was running to keep their seat they would be representing the same party, and if parties were to change their candidates for that district they still had overwhelmingly likelihood of winning.
+
+As a group we wanted to brainstorm and find what could be most useful for predicting the elusive battleground districts. For example, we consider the weight of quantity of gerrymandered borders on a county. Although gerrymandered districts are correlated with flipping, the data and method was insubstantial.
+
+Finally, we came to the idea to study the Senate as a means of finding the best predictors for battleground districts in the House. This was justified because the House and the Senate have a similar relationship with incumbency, but state-level elections have better documentation and data collection. Longer terms and ratio between candidate and average constituency are clear markers of the importance of a Senate elections. Choosing to study this system gave us more readily-available access to candidate-based data.
+
+Our goal became predicting the Senate elections as best as possible, to then distill which predictors would be useful for understanding battleground districts in the House. Early in our EDA for our second model (predicting the Senate), we found that party polarization and campaign funding would be meaningful factors to explore.
+
+In studying the Senate we essentially started the entire project anew with a refined focus — crushing battlegrounds, or in this case, Senate swing states. In order to identify swing states we looked at party polarization over the past few years. This is elegantly laid out in our EDA (the graphic with many small plots). Using this as a predictor our model was able to deftly sort between states that were bound to remain under their previous party affiliations, and states in which the status quo was not highly probably.
+
+Alongside history of party polarization we used some candidate-specific data, namely, campaign fundraising. Candidate-specific data gave credence to the Senate model over the initial House model — as it was better documented, it gave more explanatory power over decisions in battlegrounds. Although the social takeaway is a little bleak, campaign fundraising had strong predictive power in determining winners in swing states.   
+
+We continued to tweak and modify our Senate model to get it as accurate as possibly. Ironically, the amount of time we spent on it caused it to outperform our model for predicting the midterm elections. We ended getting a testing accuracy 94%.
+
+In the conclusion section of the report we speak briefly about the value of predicting the Senate, and the upshots to gaining explanatory power over potential predictors in battleground districts. Unfortunately, we did not have the time or resources to extrapolate our detailed results onto our model for the House elections.
+
+[1]“1. Trends in Party Affiliation among Demographic Groups.” Pew Research Center for the People and the Press, September 18, 2018. https://www.people-press.org/2018/03/20/1-trends-in-party-affiliation-among-demographic-groups/.
 
 ## Results
 ### Final Model results
