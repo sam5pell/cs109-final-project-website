@@ -43,3 +43,12 @@ The above model yielded the following results:
 - **Test Accuracy Score**: 79.08%
 
 ![Baseline Model Prediction Probabilities](images/baseline_probs.png)
+
+We created a confusion matrix of the results which yielded the following:
+
+|         | Predicted 0 | Predicted 1 |
+|------------------------|
+|**Actual 0**| 187  | 16    |
+|**Actual 1**| 75   | 157   |
+
+From the above confusion matrix, we can see that the baseline model does an okay job of predicting election outcomes, but, for the test data, had a tendency to predict incorrectly for districts where democrats won.
