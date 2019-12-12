@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+
+  
+  <meta charset="UTF-8">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Exploratory Data Analysis | CS109 Final Project</title>
@@ -19,71 +20,201 @@
 {"url":"http://localhost:4000/eda.html","description":"Midterm Elections","@type":"WebPage","headline":"Exploratory Data Analysis","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=ca1dd9ca56b43421e42443db8b4ae119659a6d45">
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="http://localhost:4000/">CS109 Final Project</a></h1>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#157878">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="stylesheet" href="/assets/css/style.css?v=ef34900ea9e91c42cfdbfb8dbed1e108c63b90a4">
+</head>
+<body>
+  <header class="page-header" role="banner">
+    <h1 class="project-name">Exploratory Data Analysis</h1>
+    <h2 class="project-tagline">Midterm Elections</h2>
+  </header>
 
-        
-
-        <p>Midterm Elections</p>
-
-        <a href="https://sam5pell.github.io/cs109-final-project-website/problem_statement">Problem Statment and Motivation</a>
-        <br>
-        <a href="https://sam5pell.github.io/cs109-final-project-website/introduction">Introduction and Description of Data</a>
-        <br>
-        <a href="https://sam5pell.github.io/cs109-final-project-website/lit_review">Literature Review/Realted Work</a>
-        <br>
-        <a href="https://sam5pell.github.io/cs109-final-project-website/eda">EDA</a>
-        <br>
-        <a href="https://sam5pell.github.io/cs109-final-project-website/modeling_approach">Modeling Approach</a>
-        <br>
-        <a href="https://sam5pell.github.io/cs109-final-project-website/results">Project Trajectory, Results, and Interpretation</a>
-        <br>
-        <a href="https://sam5pell.github.io/cs109-final-project-website/conclusions">Conclusions and Future Work</a>
-        <br>
-
-        
-        <p class="view"><a href="https://github.com/sam5pell/cs109-final-project-website">View the Project on GitHub <small>sam5pell/cs109-final-project-website</small></a></p>
-        
-
-        
-
-        
-      </header>
-      <section>
-
-      <h1 id="exploratory-data-analysis">Exploratory Data Analysis</h1>
+  <main id="content" class="main-content" role="main">
+    <a href="problem-statement">Problem Statment and Motivation</a> |
+    <a href="introduction">Introduction and Description of Data</a> |
+    <a href="lit-review">Literature Review/Realted Work</a> |
+    <a href="eda">EDA</a> |
+    <a href="models">Modeling Approach</a> |
+    <a href="results">Project Trajectory, Results, and Interpretation</a> |
+    <a href="conclusions">Conclusions and Future Work</a>
+    <h1 id="exploratory-data-analysis">Exploratory Data Analysis</h1>
 
 <h2 id="description-of-data">Description of Data</h2>
 
+<p>Some words here.</p>
+
 <h3 id="finding-swing-states">Finding Swing States</h3>
-<p>By scraping the Cook Partisan Voting Index <a href="https://en.wikipedia.org/wiki/Cook_Partisan_Voting_Index">wikipedia page</a> we were able to find that there are a substantial number of swing states that lean in both the Democratic and Republican direction.</p>
+<p>In order to explore the current number of swing states, we used Beautiful Soup to scrape the Cook Partisan Voting Index <a href="https://en.wikipedia.org/wiki/Cook_Partisan_Voting_Index">wikipedia page</a>. Specifically we scraped a table sourced from the Cook Political Report’s 2016 analysis for districts of the 116th United States Congress, calculated according to the results of the 2012 and the 2016 U.S. presidential elections.</p>
 
-<p>Democratic Leaning Swing states
-<img src="/images/dem_swing_states.png" alt="Dem Swing States" /></p>
+<p>The data scraped required some cleaning including stripping newline characters and converting string versions of integers to numerical values. The final table had the following structure:</p>
 
-<p>Republican Leaning Swing states
+<table>
+  <thead>
+    <tr>
+      <th>District</th>
+      <th>PVI</th>
+      <th>Party</th>
+      <th>Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Alabama 1</td>
+      <td>R+15</td>
+      <td>R</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td>Alabama 2</td>
+      <td>R+16</td>
+      <td>R</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <td>Alabama 3</td>
+      <td>R+16</td>
+      <td>R</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <td>Alabama 4</td>
+      <td>R+30</td>
+      <td>R</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Using this table we calculated the number of swings districts where a swing state is defined as any state with a score between D+5 and R+5. A district could also have a score of ‘EVEN’ if they showed no leaning in either direction. The following two graphs visualize the results.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>swing_states_df = pvi_by_district_df.loc[(pvi_by_district_df['Points'] &lt;= 5)]
+dem_swings = swing_states_df[swing_states_df['Party'] == 'D'].sort_values(by=['Points'])
+rep_swings = swing_states_df[swing_states_df['Party'] == 'R'].sort_values(by=['Points'])
+even = swing_states_df[swing_states_df['PVI'] == 'EVEN']
+</code></pre></div></div>
+
+<p><img src="/images/dem_swing_states.png" alt="Dem Swing States" />
 <img src="/images/rep_swing_states.png" alt="Rep Swing States" /></p>
 
-<p>Percentage of Elections in Each State that were Flips from 1977-2018
-<img src="/images/flips_by_state_1977_2018.png" alt="Flips by State by Year" /></p>
+<p>The following districts had an even score.</p>
+<ul>
+  <li>California 10</li>
+  <li>California 25</li>
+  <li>California 29</li>
+  <li>Florida 7</li>
+  <li>Oregon 4</li>
+  <li>Oregon 5</li>
+  <li>Washington 8</li>
+  <li>Washington 3</li>
+</ul>
 
+<h3 id="flipping-trends-by-state">Flipping Trends by State</h3>
 
-      </section>
-      <footer>
-        
-        <p>This project is maintained by <a href="https://github.com/sam5pell">sam5pell</a></p>
-        
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="/assets/js/scale.fix.js"></script>
-    
-  </body>
+<p>Next, we were interested in looking at trends in flipping where we define flipping to be a given district electing a candidate from the party their current candidate does <strong>not</strong> belong to (ex. a district with a sitting democratic representative electing a republican representative).</p>
+
+<p>We used a data set that contained constituency (district) returns for elections to the House of Representatives from 1976 to 2018 to accomplish this task. Since each row in the original data set represented one candidate, we modified the data to have one row per district per year (ex. Alabama 1 1978) with a new column representing the election outcome in that district in that year (1 indicating a democratic candidate won and 0 indicating a republican candidate won). In addition, we wanted each entry to include information on the previous two elections in that district, so we added four additional columns, two representing the vote counts for the democratic and republican candidates in the n-1th election and two representing the vote counts for the democratic and republican candidates in the n-2th election. The final table had the following form:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>year</th>
+      <th>state</th>
+      <th>district</th>
+      <th>prev_dem_votes</th>
+      <th>prev_rep_votes</th>
+      <th>prev_total_votes</th>
+      <th>prev2_dem_votes</th>
+      <th>prev2_rep_votes</th>
+      <th>prev2_total_votes</th>
+      <th>res</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1980Alabama1</td>
+      <td>1980</td>
+      <td>Alabama</td>
+      <td>1</td>
+      <td>40450</td>
+      <td>71711</td>
+      <td>112161</td>
+      <td>58906</td>
+      <td>98257</td>
+      <td>157163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>1980Alabama2</td>
+      <td>1980</td>
+      <td>Alabama</td>
+      <td>2</td>
+      <td>49341</td>
+      <td>57924</td>
+      <td>107265</td>
+      <td>66288</td>
+      <td>0</td>
+      <td>66288</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>1980Alabama3</td>
+      <td>1980</td>
+      <td>Alabama</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>106935</td>
+      <td>0</td>
+      <td>106935</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>1980Alabama4</td>
+      <td>1980</td>
+      <td>Alabama</td>
+      <td>4</td>
+      <td>87380</td>
+      <td>0</td>
+      <td>87380</td>
+      <td>141490</td>
+      <td>34531</td>
+      <td>176021</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Next, we were interested in exploring if there were particular states that were more prone to having districts that flip. In order to do this, we calculated how many district elections in each state were flips from 1980-2018 and divided that number by the total number of elections in that state to give us a percentage of elections that were flips in that state over that time period. We obtained the following results:</p>
+
+<p><img src="/images/flips_by_state_1977_2018.png" alt="Flips by State Per Year" /></p>
+
+<h3 id="flipping-trends-by-year">Flipping Trends by Year</h3>
+<p>We were also interested in looking for trends in the number of flips in all elections in a given year. We were able to do this by using our table that includes the results of the nth election and n-1^th election in one row. Our results indicated that there has been a decline in the number of swing districts in the previous two elections (2014 and 2016).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flips_by_year = {}
+for i in range(1980, 2018, 2):
+    flips = 0
+    for j in range(len(past_elections[past_elections['year'] == i])):
+        row = past_elections[past_elections['year'] == i].iloc[j]
+        dems = int(row['prev_dem_votes'])
+        reps = int(row['prev_rep_votes'])
+        res = row['res'].bool()
+        if dems &gt; reps and res == False or dems &lt; reps and res == True:
+            flips += 1
+    flips_by_year[i] = flips
+</code></pre></div></div>
+<p><img src="images/flips_by_year.png" alt="Flips Per Year" /></p>
+
+<p>Polarization of Voters Based on 2016 Presidential Election
+<img src="/images/2016_pov.png" alt="2016 POV" /></p>
+
+<p>Voting Trends in the Senate from 1976-2016
+<img src="images/voting_trends.png" alt="1976-2016 Voting Trends" /></p>
+
+  </main>
+</body>
 </html>
