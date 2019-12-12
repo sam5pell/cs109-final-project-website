@@ -1,1 +1,2 @@
-# Project Trajectory, Results, and Interpretation
+# Project Trajectory
+When we began our project we hypothesized that the outcome of the most recent elections in a given district would be important in predicting the upcoming election (or in this case the 2018 election). However, after completing our preliminary data exploration and analyzing the results of our baseline model, we realized that while previous election results can give a better than average prediction for the winner, much more information and different types of information would be necessary to improve our model.

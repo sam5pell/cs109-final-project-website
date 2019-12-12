@@ -1,4 +1,13 @@
 # Literature Review
 
+Besides the data provided to us for the project, our group was interested in investigating three main factors that we thought would be important indicators for predicting who would win an election. First, we found data from the Federal Election Commission website[1] to see how much money every candidate running for Senate was able to raise. We thought this would be important because with more money, candidates are able to get more advertising and a larger staff for grass roots efforts. Especially when the candidate is not nationally recognized for some reason or another, advertising and getting their name out is critically important. According to FiveThirtyEight in a piece called “How Money Affects Politics,”[2] the candidate who spends more money almost always wins. According to the study, ads do not actually impact the outcome of elections that much, but this is expected. For one, people are not typically swayed to vote for a candidate that does not belong to their party, so ads are virtually useless. However, money clearly still matters because raw fundraising numbers are highly correlated with winning. In our data, we decided to keep both receipts and disbursements because receipts may be indicative of how popular a candidate is (because people want to donate to who they believe the winner will be due to lobbying efforts) and disbursements may be tied to outcome through advertisement spending, higher staff salaries, etc.
 
-- Existing analyses of the 2018 election [Washington Post Article](https://www.washingtonpost.com/news/monkey-cage/wp/2018/11/10/these-5-charts-explain-who-voted-how-in-the-2018-midterm-election/)  
+Similarly, we knew incumbency was important when predicting which candidates would win, but we also had to collect additional data to find out who won. Incumbency is critically important because it gives the candidate experience representing the district, state, or country, and name recognition among their constituents. Most importantly, big donors and national committees are more likely to give to someone who has won an election beforehand.
+
+Lastly, we wanted to investigate how much the partisan makeup of a state impacted the outcome of elections. According to “The Real Value of Incumbency”[3] published in The Hill, how partisan a state is may be the most important predictor of who wins the general election (not primaries). Most people are not that familiar with their representatives or senators in congress, but elect them anyway simply because they are of the same party. Knowing this, we cleaned the dataset to allow incumbency to be a categorical feature to use in our model.
+
+[1] FEC
+
+[2] https://fivethirtyeight.com/features/money-and-elections-a-complicated-love-story/
+
+[3] https://thehill.com/opinion/columnists/mark-mellman/303491-the-real-value-of-incumbency

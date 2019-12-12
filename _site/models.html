@@ -28,20 +28,60 @@
 <body>
   <header class="page-header" role="banner">
     <h1 class="project-name">Models</h1>
-    <h2 class="project-tagline">Midterm Elections</h2>
   </header>
 
   <main id="content" class="main-content" role="main">
-    <a href="problem-statement">Problem Statment and Motivation</a> |
-    <a href="introduction">Introduction and Description of Data</a> |
-    <a href="lit-review">Literature Review/Realted Work</a> |
+    <a href="index">Project Statement and Motivaton</a> |
+    <a href="introduction">Introduction</a> |
+    <a href="lit-review">Literature Review</a> |
     <a href="eda">EDA</a> |
-    <a href="models">Modeling Approach</a> |
+    <a href="models">Models</a> |
     <a href="results">Project Trajectory, Results, and Interpretation</a> |
     <a href="conclusions">Conclusions and Future Work</a>
     <h1 id="models">Models</h1>
 
 <h2 id="baseline-model">Baseline Model</h2>
+<p>We wanted to create a fairly simple baseline model based off of previos midterm election results. We create a dataset where each row in the model represents a specific district in a specific year from 1976-2016 (see the EDA page for more info). Our predictors included state, district, and the number of votes for the republican candidates and democratic candidates in the 2 elections prior to the given election.</p>
+
+<p>Because we could not use the current year’s results as a predictor, we used the results from the previous two midterm elections in our model. For example, to predict the outcome of 2000Alabama1 we could not use the number of republican and democratic votes from that year (because we wouldn’t have that for 2018), so instead we used the vote counts from 1998Alabama1 (one election prior) and 1996Alabama1 (two elections prior). Below we use the <code class="language-plaintext highlighter-rouge">all_past_elections</code> dataframe (described in EDA) to appropriately assign those values. We then combine these new results in a new data frame.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># separate into test and training data
+columns = ['state']
+past_elections_dummies = pd.get_dummies(past_elections, columns=columns, drop_first=True)
+
+election_2018 = past_elections_dummies.loc[past_elections['year'] == 2018]
+all_past_elections = past_elections_dummies.loc[past_elections['year'] != 2018]
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>past_res =  all_past_elections['res']
+all_past_elections = all_past_elections.drop(columns=['res', 'id'])
+election_res_2018 =  election_2018['res']
+election_2018 = election_2018.drop(columns=['res', 'id'])
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X_train, y_train = normalize(all_past_elections.astype(float)), past_res.astype(float)
+X_test, y_test = normalize(election_2018.astype(float)), election_res_2018.astype(float)
+
+log_model = LogisticRegression(C=100000, solver='lbfgs', max_iter=1000).fit(X_train, y_train)
+
+y_pred_log_train = log_model.predict(X_train)
+y_proba_log_test = log_model.predict_proba(X_train)
+
+y_pred_log_test = log_model.predict(X_test)
+y_proba_log_test = log_model.predict_proba(X_test)
+
+train_acc = accuracy_score(y_train, y_pred_log_train)*100
+test_acc = accuracy_score(y_test, y_pred_log_test)*100
+</code></pre></div></div>
+
+<p>The above model yielded the following results:</p>
+
+<ul>
+  <li><strong>Training Accuracy Score</strong>: 78.22%</li>
+  <li><strong>Test Accuracy Score</strong>: 79.08%</li>
+</ul>
+
+<p><img src="images/baseline_probs.png" alt="Baseline Model Prediction Probabilities" /></p>
 
   </main>
 </body>

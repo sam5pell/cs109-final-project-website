@@ -1,0 +1,15 @@
+# CS109a Final Project
+### Predicting the Midterm Election
+Galen Lee, Samantha Pelletier, Braedon Villano, Harry Walker
+
+# Problem Statement
+Our team aimed to predict the U.S. 2018 midterm election results, particularly for those districts in which *party flipping* was likely. Our goal was to first identify states that have the *potential* to flip parties and then more accurately identify which of those states will actually flip.
+
+# Motivation
+Upon approaching this project we first worked to identify the general process of the midterm elections. Unlike presidential elections, midterm elections occur every two years and they take place at the granularity of district. In the United States there are 435 voting districts each representing just over 700,000 citizens. Every two years all seats of the House of Representatives will be open to new candidates.
+
+Predicting the results of the 2018 of the U.S. midterm elections can demonstrate the usefulness or validity of a model for future elections. As the election process is pretty well-defined, identifying patterns and metrics that are indicative of election outcomes in 2018 will be useful across future elections. Generally, midterm elections are important because members of the House play a crucial role in the U.S. government policy pipeline - they are one of the earliest and largest bottlenecks for the passing of new bills. The makeup of the House is also reflective of the current administration’s political leaning and is highly correlated with the ability for a partisan government to pass meaningful policy for its constituency.
+
+Predicting the results of the midterm elections is difficult because of the non-uniformity of complexity in the problem. What we mean by that is: there is a high difficulty in predicting the election results in districts prone to flipping, and otherwise, it easy to predict the outcome in demographically well-defined districts. Districts *prone to flipping*, or battleground districts, are districts in which there is not a high likelihood of the incumbent party reclaiming the seat in the House. As you may guess, most districts are demographically and politically homogenous. Such locations, will almost always vote for the incumbent party, and thus, these results are trivial to predict. To make a strong model for this problem it is necessary to assume well-defined regions as easy predictions, and to instead invest time in identifying what data distinguishes candidates in battleground districts.
+
+Our preliminary data search and EDA was focused on general district information. How many voters? Party affiliation of the candidate? Party of affiliations of past victor? These predictors made an ostensibly strong model. Yet, the data we collected was not as useful for predicting political contentious districts. We then motivated our EDA towards accentuating the differences between candidates and parties in battleground districts. This drove our data search more towards campaign funding and other candidate-specific data.

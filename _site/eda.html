@@ -7,9 +7,9 @@
   <meta charset="UTF-8">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Exploratory Data Analysis | CS109 Final Project</title>
+<title>EDA and Description of Data | CS109 Final Project</title>
 <meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="Exploratory Data Analysis" />
+<meta property="og:title" content="EDA and Description of Data" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Midterm Elections" />
 <meta property="og:description" content="Midterm Elections" />
@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://localhost:4000/eda.html" />
 <meta property="og:site_name" content="CS109 Final Project" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/eda.html","description":"Midterm Elections","@type":"WebPage","headline":"Exploratory Data Analysis","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/eda.html","description":"Midterm Elections","@type":"WebPage","headline":"EDA and Description of Data","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,23 +27,29 @@
 </head>
 <body>
   <header class="page-header" role="banner">
-    <h1 class="project-name">Exploratory Data Analysis</h1>
-    <h2 class="project-tagline">Midterm Elections</h2>
+    <h1 class="project-name">EDA and Description of Data</h1>
   </header>
 
   <main id="content" class="main-content" role="main">
-    <a href="problem-statement">Problem Statment and Motivation</a> |
-    <a href="introduction">Introduction and Description of Data</a> |
-    <a href="lit-review">Literature Review/Realted Work</a> |
+    <a href="index">Project Statement and Motivaton</a> |
+    <a href="introduction">Introduction</a> |
+    <a href="lit-review">Literature Review</a> |
     <a href="eda">EDA</a> |
-    <a href="models">Modeling Approach</a> |
+    <a href="models">Models</a> |
     <a href="results">Project Trajectory, Results, and Interpretation</a> |
     <a href="conclusions">Conclusions and Future Work</a>
-    <h1 id="exploratory-data-analysis">Exploratory Data Analysis</h1>
+    <h1 id="eda-and-description-of-data">EDA and Description of Data</h1>
 
-<h2 id="description-of-data">Description of Data</h2>
+<h3 id="voting-trends">Voting Trends</h3>
+<p>We started by exploring voting trends in the Senate to gain an overview of party leanings in each state. We used a dataset that included the number of votes each candidate received in each state for all Senate elections from 1976-2016. We then created a new dataset where each observation represents a given state and includes information on the percentage of the total votes that the republican, democratic, and independent candidates received in each state in each year.</p>
 
-<p>Some words here.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>elections['percentage'] = elections['candidatevotes'] / elections['totalvotes']
+</code></pre></div></div>
+
+<p>We then plotted the results for each state:
+<img src="images/voting_trends.png" alt="1976-2016 Voting Trends" /></p>
+
+<p><strong>MAYBE USE THIS TO EXPLAIN WHY WE DON’T CARE ABOUT INDEPENDENT</strong></p>
 
 <h3 id="finding-swing-states">Finding Swing States</h3>
 <p>In order to explore the current number of swing states, we used Beautiful Soup to scrape the Cook Partisan Voting Index <a href="https://en.wikipedia.org/wiki/Cook_Partisan_Voting_Index">wikipedia page</a>. Specifically we scraped a table sourced from the Cook Political Report’s 2016 analysis for districts of the 116th United States Congress, calculated according to the results of the 2012 and the 2016 U.S. presidential elections.</p>
@@ -193,7 +199,7 @@ even = swing_states_df[swing_states_df['PVI'] == 'EVEN']
 <p><img src="/images/flips_by_state_1977_2018.png" alt="Flips by State Per Year" /></p>
 
 <h3 id="flipping-trends-by-year">Flipping Trends by Year</h3>
-<p>We were also interested in looking for trends in the number of flips in all elections in a given year. We were able to do this by using our table that includes the results of the nth election and n-1^th election in one row. Our results indicated that there has been a decline in the number of swing districts in the previous two elections (2014 and 2016).</p>
+<p>We were also interested in looking for trends in the number of flips in all elections in a given year. We were able to do this by using our table that includes the results of the nth election and n-1th election in one row. Our results indicated that there has been a decline in the number of swing districts in the previous two elections (2014 and 2016).</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flips_by_year = {}
 for i in range(1980, 2018, 2):
@@ -209,11 +215,57 @@ for i in range(1980, 2018, 2):
 </code></pre></div></div>
 <p><img src="images/flips_by_year.png" alt="Flips Per Year" /></p>
 
-<p>Polarization of Voters Based on 2016 Presidential Election
-<img src="/images/2016_pov.png" alt="2016 POV" /></p>
+<h3 id="polarization-of-voters">Polarization of Voters</h3>
+<p>To further understand the political climate at the time of the 2018 election, we wanted to explore the polarization of voters in each state (meaning how democratic or how republican a state is). We used a dataset that included the results of the 2016 General Election. We specifically looked at the number of votes cast for the democratic candidate and republican candidate in each state in 2016. We then added a column to the table that represented the difference between the number of votes for the democratic and republican candidates calculated by:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ge_party_votes_2016_1['Difference'] = ge_party_votes_2016_1.apply(lambda row: (row['Republican Candidates'] - row['Democratic Candidates']) / (row['Republican Candidates'] + row['Democratic Candidates']), axis=1)
+</code></pre></div></div>
 
-<p>Voting Trends in the Senate from 1976-2016
-<img src="images/voting_trends.png" alt="1976-2016 Voting Trends" /></p>
+<p>The final table had the following form:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>State</th>
+      <th>Democratic Candidates</th>
+      <th>Republican Candidates</th>
+      <th>Other Candidates</th>
+      <th>Difference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AL</td>
+      <td>2100167.0</td>
+      <td>3875377.0</td>
+      <td>124957.0</td>
+      <td>0.297079</td>
+    </tr>
+    <tr>
+      <td>AK</td>
+      <td>263673.0</td>
+      <td>456624.0</td>
+      <td>217950.0</td>
+      <td>0.267877</td>
+    </tr>
+    <tr>
+      <td>AS</td>
+      <td>2740.0</td>
+      <td>8923.0</td>
+      <td>171.0</td>
+      <td>0.530138</td>
+    </tr>
+    <tr>
+      <td>AZ</td>
+      <td>3227099.0</td>
+      <td>3876046.0</td>
+      <td>412814.0</td>
+      <td>0.091361</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following map shows the results, where the more red a state is, the more republican it is and the more blue a state is, the more democratic it is. Purple states fall somewhere in between.
+<img src="/images/2016_pov.png" alt="2016 POV" /></p>
 
   </main>
 </body>
